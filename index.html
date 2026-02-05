@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For My Love ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(120deg, #ff9a9e, #fad0c4);
+  color: #fff;
+  text-align: center;
+  overflow-x: hidden;
+}
+.hidden { display: none; }
+.container { padding: 20px; }
+h1 { font-size: 2.2em; margin-top: 20px; }
+#typing { font-size: 1.2em; margin: 20px; min-height: 60px; }
+.slideshow img {
+  width: 85%;
+  max-width: 320px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+.countdown { font-size: 1.3em; margin-top: 20px; }
+input, button {
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  font-size: 1em;
+}
+button { background: #ff4d6d; color: white; margin-top: 10px; }
+</style>
+</head>
+
+<body>
+
+<div id="lock" class="container">
+  <h1>🔐 Secret Love Page</h1>
+  <p>Enter our special word 💕</p>
+  <input type="password" id="pass" placeholder="Password">
+  <br>
+  <button onclick="unlock()">Open 💖</button>
+</div>
+
+<div id="main" class="hidden container">
+
+  <audio id="music" autoplay loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  </audio>
+
+  <h1>Hey My Love ❤️</h1>
+  <div id="typing"></div>
+
+  <div class="slideshow">
+    <img id="slide" src="https://picsum.photos/400/400?random=1">
+  </div>
+
+  <div class="countdown" id="countdown"></div>
+
+</div>
+
+<script>
+function unlock() {
+  if (document.getElementById("pass").value === "love") {
+    document.getElementById("lock").style.display = "none";
+    document.getElementById("main").classList.remove("hidden");
+    document.getElementById("music").play();
+    typeText();
+  } else {
+    alert("Wrong password 😜");
+  }
+}
+
+const text = "From the moment you came into my life, everything became more beautiful. This little page is just a small reminder of how special you are to me ❤️";
+let i = 0;
+function typeText() {
+  if (i < text.length) {
+    document.getElementById("typing").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeText, 50);
+  }
+}
+
+let imgIndex = 1;
+setInterval(() => {
+  imgIndex++;
+  document.getElementById("slide").src = "https://picsum.photos/400/400?random=" + imgIndex;
+}, 3000);
+
+const targetDate = new Date("Feb 14, 2026 00:00:00").getTime();
+setInterval(() => {
+  const now = new Date().getTime();
+  const diff = targetDate - now;
+  if (diff > 0) {
+    const d = Math.floor(diff / (1000*60*60*24));
+    const h = Math.floor((diff % (1000*60*60*24))/(1000*60*60));
+    const m = Math.floor((diff % (1000*60*60))/(1000*60));
+    document.getElementById("countdown").innerHTML =
+      `⏳ Countdown to our special day: ${d}d ${h}h ${m}m`;
+  }
+}, 1000);
+</script>
+
+</body>
+</html>
