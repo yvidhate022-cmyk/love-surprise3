@@ -2,107 +2,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>For My Love ❤️</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body {
-  margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(120deg, #ff9a9e, #fad0c4);
-  color: #fff;
-  text-align: center;
-  overflow-x: hidden;
-}
-.hidden { display: none; }
-.container { padding: 20px; }
-h1 { font-size: 2.2em; margin-top: 20px; }
-#typing { font-size: 1.2em; margin: 20px; min-height: 60px; }
-.slideshow img {
-  width: 85%;
-  max-width: 320px;
-  border-radius: 20px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-}
-.countdown { font-size: 1.3em; margin-top: 20px; }
-input, button {
-  padding: 10px;
-  border-radius: 10px;
-  border: none;
-  font-size: 1em;
-}
-button { background: #ff4d6d; color: white; margin-top: 10px; }
-</style>
+  <meta charset="UTF-8">
+  <title>For My Love ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      text-align: center;
+      color: white;
+    }
+
+    h1 {
+      margin-top: 40px;
+      font-size: 2.5em;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    .countdown {
+      font-size: 1.4em;
+      margin-top: 30px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 20px;
+      max-width: 350px;
+      margin: 30px auto;
+    }
+
+    img {
+      width: 100%;
+      border-radius: 15px;
+      margin-top: 15px;
+    }
+  </style>
 </head>
 
 <body>
 
-<div id="lock" class="container">
-  <h1>🔐 Secret Love Page</h1>
-  <p>Enter our special word 💕</p>
-  <input type="password" id="pass" placeholder="Password">
-  <br>
-  <button onclick="unlock()">Open 💖</button>
-</div>
-
-<div id="main" class="hidden container">
-
-  <audio id="music" autoplay loop>
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-  </audio>
-
-  <h1>Hey My Love ❤️</h1>
-  <div id="typing"></div>
-
-  <div class="slideshow">
-    <img id="slide" src="https://picsum.photos/400/400?random=1">
+  <!-- COUNTDOWN SECTION -->
+  <div class="container" id="countdownSection">
+    <h1>⏳ A Surprise Is Coming…</h1>
+    <div class="countdown" id="countdown"></div>
   </div>
 
-  <div class="countdown" id="countdown"></div>
+  <!-- MAIN CONTENT (HIDDEN FIRST) -->
+  <div class="container hidden" id="mainContent">
+    <h1>Hey My Love ❤️</h1>
 
-</div>
+    <div class="card">
+      <p>
+        From the moment you came into my life,  
+        everything became more beautiful.  
+        This page is just a small reminder  
+        of how special you are to me 💖
+      </p>
 
+      <!-- CHANGE IMAGE NAME IF YOU WANT -->
+      <img src="Snapchat-100321993.jpg" alt="My Love">
+    </div>
+  </div>
+
+  <script>
+    // 🔴 SET YOUR SPECIAL DATE HERE (YYYY, MM-1, DD, HH, MM, SS)
+    const targetDate = new Date(2026, 1, 14, 0, 0, 0).getTime();
+
+    const timer = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance <= 0) {
+        clearInterval(timer);
+        document.getElementById("countdownSection").classList.add("hidden");
+        document.getElementById("mainContent").classList.remove("hidden");
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("countdown").innerHTML =
+        💖 ${days}d ${hours}h ${minutes}m ${seconds}s;
+    }, 1000);
+  </script>
+  <!-- ❤️ Floating Hearts Animation -->
+<div class="hearts"></div>
+
+<style>
+.hearts {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.heart {
+  position: absolute;
+  bottom: -20px;
+  width: 20px;
+  height: 20px;
+  background: red;
+  transform: rotate(45deg);
+  animation: floatUp 6s linear infinite;
+}
 <script>
-function unlock() {
-  if (document.getElementById("pass").value === "love") {
-    document.getElementById("lock").style.display = "none";
-    document.getElementById("main").classList.remove("hidden");
-    document.getElementById("music").play();
-    typeText();
-  } else {
-    alert("Wrong password 😜");
-  }
-}
-
-const text = "From the moment you came into my life, everything became more beautiful. This little page is just a small reminder of how special you are to me ❤️";
-let i = 0;
-function typeText() {
-  if (i < text.length) {
-    document.getElementById("typing").innerHTML += text.charAt(i);
-    i++;
-    setTimeout(typeText, 50);
-  }
-}
-
-let imgIndex = 1;
+/* HEART ANIMATION */
 setInterval(() => {
-  imgIndex++;
-  document.getElementById("slide").src = "https://picsum.photos/400/400?random=" + imgIndex;
-}, 3000);
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  const hearts = ["❤️","💖","💕","💘","💗"];
+heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (15 + Math.random() * 20) + "px";
+  document.body.appendChild(heart);
 
-const targetDate = new Date("Feb 14, 2026 00:00:00").getTime();
-setInterval(() => {
-  const now = new Date().getTime();
-  const diff = targetDate - now;
-  if (diff > 0) {
-    const d = Math.floor(diff / (1000*60*60*24));
-    const h = Math.floor((diff % (1000*60*60*24))/(1000*60*60));
-    const m = Math.floor((diff % (1000*60*60))/(1000*60));
-    document.getElementById("countdown").innerHTML =
-      `⏳ Countdown to our special day: ${d}d ${h}h ${m}m`;
-  }
-}, 1000);
+  setTimeout(() => {
+    heart.remove();
+  }, 6000);
+}, 500);
 </script>
-
+  
 </body>
 </html>
+
